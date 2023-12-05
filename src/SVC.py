@@ -29,3 +29,6 @@ class SVC:
 C :{self.C}
 kernel : {self.kernel}
 gamma : {self.gamma}''')
+    
+    def name(self):
+        return "Support Vector Classification"

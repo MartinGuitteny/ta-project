@@ -24,3 +24,6 @@ class KNN:
     def afficher_parametres(self):
         print(f'''Parametres:
 n :{self.n}''')
+        
+    def name(self):
+        return "K-nearest neighbors"
