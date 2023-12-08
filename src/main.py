@@ -1,18 +1,22 @@
 import gestion_donnees as gd
 import SVC
 import KNN
-import Perceptron
+import reseau_de_neurones
+import modele_generatif
 from sklearn.metrics import recall_score, precision_score
-
 
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
     datas=donnees.transformation("species")
     X_train,X_test,t_train,t_test = gd.separation(datas)
+
+    generatif = modele_generatif.ModeleGeneratif()
     svc = SVC.SVC()
     knn = KNN.KNN()
-    perceptron = Perceptron.MLPModel()
-    methodes = [svc,knn,perceptron]
+    reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
+
+    methodes = [svc, knn, reseau_neurones, generatif]
+
     for methode in methodes:
         methode.recherche_parametres(X_train,t_train)
         methode.afficher_parametres()
@@ -20,8 +24,7 @@ def main():
         pred = methode.prediction(X_test)
         precision = precision_score(t_test,pred,average='macro')
         recall = recall_score(t_test,pred,average='macro', zero_division = 0)
-        print(f'''Paramètres :
-Modèle : {methode.name()}
+        print(f'''Modèle : {methode.name()}
 Precision : {precision}
 Recall : {recall}''')
 

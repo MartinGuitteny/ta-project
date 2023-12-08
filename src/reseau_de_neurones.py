@@ -1,12 +1,12 @@
 from sklearn.model_selection import GridSearchCV
 from sklearn.neural_network import MLPClassifier
 
-class MLPModel:
+class ReseauDeNeurones:
     def __init__(self, hidden_layer_sizes=(100,), max_iter=1000, learning_rate_init=0.001):
         self.hidden_layer_sizes = hidden_layer_sizes
         self.max_iter = max_iter
         self.learning_rate_init = learning_rate_init
-        self.model = MLPClassifier(hidden_layer_sizes=self.hidden_layer_sizes, max_iter=self.max_iter, learning_rate_init=self.learning_rate_init)
+        self.model = MLPClassifier(hidden_layer_sizes=self.hidden_layer_sizes, max_iter=self.max_iter, learning_rate_init=self.learning_rate_init, activation='relu')
 
     def entrainement(self, X_train, y_train):
         self.model.fit(X_train, y_train)
@@ -26,10 +26,10 @@ class MLPModel:
         self.model = grid_search.best_estimator_
 
     def afficher_parametres(self):
-        print(f'''Parameters:
+        print(f'''Paramètres:
 hidden_layer_sizes: {self.hidden_layer_sizes}
 max_iter: {self.max_iter}
 learning_rate_init: {self.learning_rate_init}''')
 
     def name(self):
-        return "Perceptron multi-couches"
+        return "Réseau de neurones"
