@@ -3,7 +3,7 @@ import SVC
 import KNN
 import Perceptron
 from sklearn.metrics import recall_score, precision_score
-
+import logistic
 
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
@@ -11,8 +11,9 @@ def main():
     X_train,X_test,t_train,t_test = gd.separation(datas)
     svc = SVC.SVC()
     knn = KNN.KNN()
+    logistic=logistic.Logistic()
     perceptron = Perceptron.MLPModel()
-    methodes = [svc,knn,perceptron]
+    methodes = [svc,knn,perceptron,logistic]
     for methode in methodes:
         methode.recherche_parametres(X_train,t_train)
         methode.afficher_parametres()
