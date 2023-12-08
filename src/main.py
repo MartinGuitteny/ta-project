@@ -5,6 +5,7 @@ import reseau_de_neurones
 import modele_generatif
 import logistic
 import evaluation_metrics
+import GBT
 
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
@@ -16,8 +17,10 @@ def main():
     knn = KNN.KNN()
     reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
     logistic_ = logistic.Logistic()
+    tree= GBT.GBT()
 
-    methodes = [svc, knn, reseau_neurones, generatif, logistic_]
+    methodes = [svc, knn, reseau_neurones, generatif, logistic_,tree]
+
     ev = evaluation_metrics.evaluation_metrics(t_test)
 
     for methode in methodes:
