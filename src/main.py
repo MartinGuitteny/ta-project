@@ -4,6 +4,7 @@ import KNN
 import reseau_de_neurones
 import modele_generatif
 from sklearn.metrics import recall_score, precision_score
+import logistic
 
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
@@ -14,8 +15,9 @@ def main():
     svc = SVC.SVC()
     knn = KNN.KNN()
     reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
+    logistic_ = logistic.Logistic()
 
-    methodes = [svc, knn, reseau_neurones, generatif]
+    methodes = [svc, knn, reseau_neurones, generatif, logistic_]
 
     for methode in methodes:
         methode.recherche_parametres(X_train,t_train)
