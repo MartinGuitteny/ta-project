@@ -3,8 +3,8 @@ import SVC
 import KNN
 import reseau_de_neurones
 import modele_generatif
-from sklearn.metrics import recall_score, precision_score
 import logistic
+import evaluation_metrics
 
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
@@ -18,17 +18,14 @@ def main():
     logistic_ = logistic.Logistic()
 
     methodes = [svc, knn, reseau_neurones, generatif, logistic_]
+    ev = evaluation_metrics.evaluation_metrics(t_test)
 
     for methode in methodes:
         methode.recherche_parametres(X_train,t_train)
         methode.afficher_parametres()
         methode.entrainement(X_train,t_train)
         pred = methode.prediction(X_test)
-        precision = precision_score(t_test,pred,average='macro')
-        recall = recall_score(t_test,pred,average='macro', zero_division = 0)
-        print(f'''Modèle : {methode.name()}
-Precision : {precision}
-Recall : {recall}''')
+        ev.evaluate(methode,pred)
 
 if __name__ == "__main__":
     main()
