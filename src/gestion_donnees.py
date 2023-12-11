@@ -17,7 +17,6 @@ class GestionDonnees:
             ("normalizer", scaler, columns_to_normalize)
         ])
         df[columns_to_normalize] = ct.fit_transform(df)
-        print(df)
 
     def transformation(self, attribut):
         df = pd.read_csv(self.path)
@@ -27,8 +26,6 @@ class GestionDonnees:
         return df
 
     def separation(self, df, size=0.2):
-        # t = df["species"]
-        # x = df.drop(columns=["species", "id"])
         X_train, X_test, t_train, t_test = self.balanced_train_test_split(df, test_size=size)
         return X_train, X_test, t_train, t_test
 
@@ -56,9 +53,6 @@ class GestionDonnees:
                 selected_tests_samples_per_class[row.species] += 1
             else:
                 train_index.append(row.Index)
-        
-        # print(train_index, len(train_index))
-        # print(test_index, len(test_index))
 
         X_train = df.loc[train_index]
         X_test = df.loc[test_index]
@@ -68,8 +62,6 @@ class GestionDonnees:
 
         X_train = X_train.drop(columns="species")
         X_test = X_test.drop(columns="species")
-
-        # print(X_train.head(5), X_test.head(5), t_train.head(5), t_test.head(5))
 
         return X_train, X_test, t_train, t_test
             

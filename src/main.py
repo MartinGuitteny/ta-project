@@ -21,7 +21,7 @@ def main():
     knn = KNN.KNN()
     reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
     logistic_ = logistic.Logistic()
-    # tree = GBT.GBT()
+    tree = GBT.GBT()
     perceptron_ = perceptron.PerceptronModel()
 
     methodes = [generatif, svc, knn, reseau_neurones, logistic_, perceptron_]
