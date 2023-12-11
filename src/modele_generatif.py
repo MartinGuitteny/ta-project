@@ -18,7 +18,7 @@ class ModeleGeneratif:
         return self.model.predict(X_test_pca)
 
     def recherche_parametres(self, X, y, cv=10):
-        param_grid = {'n_components': [i for i in range(50,70)],
+        param_grid = {'n_components': [99],
                       'covariance_type': ['full', 'tied', 'diag', 'spherical']}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, y)

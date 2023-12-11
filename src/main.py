@@ -6,7 +6,10 @@ import modele_generatif
 import logistic
 import evaluation_metrics
 import GBT
+import perceptron
 import time
+
+
 
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
@@ -19,8 +22,9 @@ def main():
     reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
     logistic_ = logistic.Logistic()
     tree = GBT.GBT()
+    perceptron_ = perceptron.PerceptronModel()
 
-    methodes = [svc, knn, reseau_neurones, generatif, logistic_,tree]
+    methodes = [svc, knn, reseau_neurones, generatif, logistic_, tree, perceptron_]
 
     ev = evaluation_metrics.evaluation_metrics(t_test)
 
