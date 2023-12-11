@@ -3,7 +3,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.mixture import GaussianMixture
 
 class ModeleGeneratif:
-    def __init__(self, n_components=2, covariance_type='full'):
+    def __init__(self, n_components=99, covariance_type='full'):
         self.n_components = n_components
         self.covariance_type = covariance_type
         self.pca = PCA(n_components=2)
@@ -18,18 +18,15 @@ class ModeleGeneratif:
         return self.model.predict(X_test_pca)
 
     def recherche_parametres(self, X, y, cv=10):
-        param_grid = {'n_components': [99],
-                      'covariance_type': ['full', 'tied', 'diag', 'spherical']}
+        param_grid = {'covariance_type': ['full', 'tied', 'diag', 'spherical']}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, y)
-        self.n_components = grid_search.best_params_.get("n_components")
         self.covariance_type = grid_search.best_params_.get("covariance_type")
         self.model = grid_search.best_estimator_
 
     def afficher_parametres(self):
-        print(f'''Paramètres:
-n_components: {self.n_components}
-covariance_type: {self.covariance_type}''')
+        print(f'''Paramètres :
+covariance_type : {self.covariance_type}''')
 
     def name(self):
         return "Modèle génératif"

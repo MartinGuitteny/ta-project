@@ -21,10 +21,10 @@ def main():
     knn = KNN.KNN()
     reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
     logistic_ = logistic.Logistic()
-    tree = GBT.GBT()
+    # tree = GBT.GBT()
     perceptron_ = perceptron.PerceptronModel()
 
-    methodes = [svc, knn, reseau_neurones, generatif, logistic_, tree, perceptron_]
+    methodes = [generatif, svc, knn, reseau_neurones, logistic_, perceptron_]
 
     ev = evaluation_metrics.evaluation_metrics(t_test)
 
@@ -35,6 +35,7 @@ def main():
         methode.entrainement(X_train, t_train)
         pred = methode.prediction(X_test)
         ev.evaluate(methode, pred)
+        ev.confusion_mat(pred)
         delta = int(time.time() - debut)
         print(f"Temps écoulé : {delta // 60} min {delta % 60} sec\n")
 

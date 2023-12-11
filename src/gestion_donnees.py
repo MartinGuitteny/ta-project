@@ -1,14 +1,27 @@
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 import pandas as pd
-
 
 class GestionDonnees:
     def __init__(self, path_csv):
         self.path = path_csv
 
+    def normalize(self, df):
+        columns_to_normalize = list(df.columns)
+        columns_to_normalize.remove("id")
+        columns_to_normalize.remove("species")
+
+        scaler = StandardScaler()
+        ct = ColumnTransformer([
+            ("normalizer", scaler, columns_to_normalize)
+        ])
+        df[columns_to_normalize] = ct.fit_transform(df)
+        print(df)
+
     def transformation(self, attribut):
         df = pd.read_csv(self.path)
+        self.normalize(df)
         le = LabelEncoder().fit(df[attribut])
         df[attribut] = le.transform(df[attribut])
         return df
