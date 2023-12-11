@@ -12,7 +12,7 @@ class Logistic:
     def prediction(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, y, cv=10):
+    def recherche_parametres(self, X, y, cv=5):
         param_grid = {'C': [0.01,0.1,1,10]}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, y)

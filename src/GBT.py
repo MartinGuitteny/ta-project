@@ -14,7 +14,7 @@ class GBT:
     def prediction(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, t, cv=10):
+    def recherche_parametres(self, X, t, cv=5):
         param_grid = {'max_depth': [2,3,5,7,9],
                       'n_estimators': [50,100,150,200],
                       'learning_rate': [0.01,0.1,1,10]}
@@ -28,8 +28,8 @@ class GBT:
     def afficher_parametres(self):
         print(f'''Paramètres:
 max_depth : {self.max_depth}
-n_estimators :{self.n_estimators}
-learning_rate :{self.learning_rate}
+n_estimators : {self.n_estimators}
+learning_rate : {self.learning_rate}
 ''')
         
     def name(self):

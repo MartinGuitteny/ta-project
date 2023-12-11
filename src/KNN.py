@@ -12,7 +12,7 @@ class KNN:
     def prediction(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, t, cv=10):
+    def recherche_parametres(self, X, t, cv=5):
         param_grid = {'n_neighbors': [5,7,10,12,15]}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, t)
@@ -23,7 +23,7 @@ class KNN:
     
     def afficher_parametres(self):
         print(f'''Paramètres:
-n :{self.n}''')
+n : {self.n}''')
         
     def name(self):
         return "K-nearest neighbors"

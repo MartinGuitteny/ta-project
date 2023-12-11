@@ -14,7 +14,7 @@ class ReseauDeNeurones:
     def prediction(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, y, cv=10):
+    def recherche_parametres(self, X, y, cv=5):
         param_grid = {'hidden_layer_sizes': [(50, 50), (100, 100)],
                       'max_iter': [1000],
                       'learning_rate_init': [0.001, 0.01]}
@@ -27,9 +27,9 @@ class ReseauDeNeurones:
 
     def afficher_parametres(self):
         print(f'''Paramètres:
-hidden_layer_sizes: {self.hidden_layer_sizes}
-max_iter: {self.max_iter}
-learning_rate_init: {self.learning_rate_init}''')
+hidden_layer_sizes : {self.hidden_layer_sizes}
+max_iter : {self.max_iter}
+learning_rate_init : {self.learning_rate_init}''')
 
     def name(self):
         return "Réseau de neurones"

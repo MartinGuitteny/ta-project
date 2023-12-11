@@ -15,7 +15,7 @@ class SVC:
     def prediction(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, t, cv=10):
+    def recherche_parametres(self, X, t, cv=5):
         param_grid = {'C': [0.001,0.01,0.1, 1,10], 'kernel': ['linear', 'rbf','sigmoid','poly'], 'gamma': [0.001,0.01,0.1, 1]}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, t)
@@ -26,7 +26,7 @@ class SVC:
     
     def afficher_parametres(self):
         print(f'''Parametres:
-C :{self.C}
+C : {self.C}
 kernel : {self.kernel}
 gamma : {self.gamma}''')
     

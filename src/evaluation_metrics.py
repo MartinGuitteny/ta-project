@@ -5,11 +5,11 @@ class evaluation_metrics():
         self.t_test = t_test
 
     def evaluate(self,methode,pred):
-        precision = precision_score(self.t_test,pred,average='macro')
+        precision = precision_score(self.t_test,pred,average='macro', zero_division = 0)
         recall = recall_score(self.t_test,pred,average='macro', zero_division = 0)
         f1_score = 2 * (precision * recall) / (precision + recall)
         print(f'''Modèle : {methode.name()}
-Precision : {precision}
-Recall : {recall}
-f1-score : {f1_score}''')
+Précision : {precision}
+Rappel : {recall}
+F1-Score : {f1_score}''')
         return precision, recall, f1_score
