@@ -1,4 +1,6 @@
 import argparse
+
+from sklearn.model_selection import train_test_split
 import data_gestion as dg
 import evaluation_metrics as evm
 import numpy as np
@@ -16,8 +18,11 @@ MODELS = [
     "neural_network"
 ]
 
-def do_n_simulations(N, model_type, verbose):
-    
+def do_n_simulations(N, model_type, verbose, is_normalized, is_split_balanced):
+
+    is_normalized = bool(is_normalized)
+    is_split_balanced = bool(is_split_balanced)
+
     print()
     precision = []
     recall = []
@@ -29,9 +34,14 @@ def do_n_simulations(N, model_type, verbose):
         if verbose >= 1:
             print(f"----- ITERATION {i + 1} / {N} -----\n")
 
-        data_gestion = dg.DataGestion("./data/train.csv")
+        data_gestion = dg.DataGestion("./data/train.csv", is_normalized)
         data = data_gestion.transformation("species")
-        X_train, X_test, t_train, t_test = data_gestion.balanced_train_test_split(data, test_size=0.2)
+        if is_split_balanced:
+            X_train, X_test, t_train, t_test = data_gestion.balanced_train_test_split(data, test_size=0.2)
+        else:
+            t = data["species"]
+            X = data.drop(columns=["species", "id"]).reset_index(drop=True)
+            X_train, X_test, t_train, t_test = train_test_split(X, t, test_size=0.2)
         model = None
 
         if model_type == "generative":
@@ -91,9 +101,11 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--number_iterations", type=int, default=20, help="Number of iterations")
     parser.add_argument("-m", "--model", type=str, default="neural_network", help="Model")
     parser.add_argument("-v", "--verbose", type=int, default=0, help="Verbose level")
+    parser.add_argument("--normalize", type=int, default=1, help="Data normalization")
+    parser.add_argument("--balancing_split", type=int, default=1, help="Ensure that each class is equally represented in train and test datasets")
     args = parser.parse_args()
 
     if args.number_iterations > 0 and args.model in MODELS:
-        do_n_simulations(args.number_iterations, args.model, args.verbose)
+        do_n_simulations(args.number_iterations, args.model, args.verbose, args.normalize, args.balancing_split)
     else:
         print(f"Wrong input. Number of iterations must be > 0. Model must be in {MODELS}.")

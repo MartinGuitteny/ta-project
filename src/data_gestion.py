@@ -4,8 +4,9 @@ import pandas as pd
 
 class DataGestion:
 
-    def __init__(self, path_csv):
+    def __init__(self, path_csv, is_normalized):
         self.path = path_csv
+        self.is_normalized = is_normalized
 
     def normalize(self, df):
         columns_to_normalize = list(df.columns)
@@ -20,7 +21,8 @@ class DataGestion:
 
     def transformation(self, attribute):
         df = pd.read_csv(self.path)
-        self.normalize(df)
+        if self.is_normalized:
+            self.normalize(df)
         le = LabelEncoder().fit(df[attribute])
         df[attribute] = le.transform(df[attribute])
         return df
