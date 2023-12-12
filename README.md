@@ -29,5 +29,5 @@
     python3 src/main.py -n <nombre_d_iterations> -m <type_de_modele> -v <niveau_de_verbosité> --normalize=<normalisation> --balancing_split=<equilibrage_des_classes>
     ```
 
-- `normalisation` : normalise les données (Z-Score) avant de les utiliser dans le modèle. Activé par défaut.
-- `balancing_split` : dans les ensembles d'entraînement et de test, il y aura autant de données de chaque classe. Activé par défaut.
+- `normalisation` : normalise les données (Z-Score) avant de les utiliser dans le modèle. Activé par défaut. Vaut `0` ou `1`.
+- `balancing_split` : dans les ensembles d'entraînement et de test, il y aura autant de données de chaque classe. Activé par défaut. Vaut `0` ou `1`.
