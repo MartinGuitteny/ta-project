@@ -1,9 +1,9 @@
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
 import pandas as pd
 
-class GestionDonnees:
+class DataGestion:
+
     def __init__(self, path_csv):
         self.path = path_csv
 
@@ -18,24 +18,20 @@ class GestionDonnees:
         ])
         df[columns_to_normalize] = ct.fit_transform(df)
 
-    def transformation(self, attribut):
+    def transformation(self, attribute):
         df = pd.read_csv(self.path)
         self.normalize(df)
-        le = LabelEncoder().fit(df[attribut])
-        df[attribut] = le.transform(df[attribut])
+        le = LabelEncoder().fit(df[attribute])
+        df[attribute] = le.transform(df[attribute])
         return df
-
-    def separation(self, df, size=0.2):
-        X_train, X_test, t_train, t_test = self.balanced_train_test_split(df, test_size=size)
-        return X_train, X_test, t_train, t_test
 
     def balanced_train_test_split(self, df, test_size=0.2):
         """
-        Sépare un data frame en 4 : X_train, X_test, t_train, t_test.
-        Pour tout data frame parmi ces 4, il y a autant d'individus de chaque classe.
-        Exemple avec size=0.2 et 100 classes de 10 individus :
-        8 individus de chaque classe dans X_train et t_train
-        2 individus de chaque classe dans X_test et t_test
+        Split a data frame in 4 : X_train, X_test, t_train, t_test.
+        For all data frame, the number of samples of each class is equal.
+        Example with size=0.2 and 100 classes of 10 samples :
+        8 samples of each class in X_train and t_train
+        2 samples of each class X_test and t_test
         """
         df = pd.DataFrame(df.drop(columns="id").reset_index(drop=True).sample(frac=1))
         number_tests_samples = 10 * test_size # 10 samples per class

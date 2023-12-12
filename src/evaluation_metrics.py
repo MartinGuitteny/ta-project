@@ -15,10 +15,11 @@ class EvaluationMetrics():
         else:
             f1_score = 2 * (precision * recall) / (precision + recall)
         if verbose >= 2:
-            print(f'''Model : {methode.name()}
-Precision : {precision}
-Recall : {recall}
-F1-Score : {f1_score}''')
+            print(f'''*** METRICS ***
+Precision : {round(precision, 3)}
+Recall : {round(recall, 3)}
+F1-Score : {round(f1_score, 3)}
+''')
         return precision, recall, f1_score
 
     def confusion_matrix(self,t_pred,name):

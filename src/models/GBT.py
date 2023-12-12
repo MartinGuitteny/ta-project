@@ -8,13 +8,13 @@ class GBT:
         self.learning_rate=learning_rate
         self.model = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,max_depth=1)
 
-    def entrainement(self, X_train, y_train):
+    def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
 
-    def prediction(self, X_test):
+    def predict(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, t, cv=5):
+    def search_best_parameters(self, X, t, cv=5):
         param_grid = {'max_depth': [2,3,5,7,9],
                       'n_estimators': [50,100,150,200],
                       'learning_rate': [0.01,0.1,1,10]}
@@ -25,8 +25,8 @@ class GBT:
         self.learning_rate = grid_search.best_params_.get("learning_rate")
         self.model = grid_search.best_estimator_
     
-    def afficher_parametres(self):
-        print(f'''Parameters :
+    def print_parameters(self):
+        print(f'''*** PARAMETERS ***
 max_depth : {self.max_depth}
 n_estimators : {self.n_estimators}
 learning_rate : {self.learning_rate}

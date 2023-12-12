@@ -1,60 +1,24 @@
-import gestion_donnees as gd
-import evaluation_metrics as evm
-
-import SVC
-import KNN
-import reseau_de_neurones
-import modele_generatif
-import logistic
-
-import GBT
-import perceptron
-
 import argparse
-
+import data_gestion as dg
+import evaluation_metrics as evm
 import numpy as np
 import time
+
+from models import generative_model, logistic_regression, KNN, GBT, neural_network, perceptron, SVC
 
 MODELS = [
     "generative",
     "knn",
-    "gbtree",
+    "gbt",
     "perceptron",
     "logistic",
     "svc",
     "neural_network"
 ]
 
-# def main():
-#     donnees = gd.GestionDonnees("./data/train.csv")
-#     datas = donnees.transformation("species")
-#     X_train, X_test, t_train, t_test = donnees.separation(datas)
-
-#     generatif = modele_generatif.ModeleGeneratif()
-#     knn = KNN.KNN()
-#     tree = GBT.GBT()
-#     perceptron_ = perceptron.PerceptronModel()
-#     logistic_ = logistic.Logistic()
-#     svc = SVC.SVC()
-#     reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
-
-#     methodes = [generatif, knn, tree, perceptron_, logistic_, svc, reseau_neurones]
-
-#     ev = evm.evaluation_metrics(t_test)
-
-#     for methode in methodes:
-#         debut = time.time()
-#         methode.recherche_parametres(X_train, t_train)
-#         methode.afficher_parametres()
-#         methode.entrainement(X_train, t_train)
-#         pred = methode.prediction(X_test)
-#         ev.evaluate(methode, pred)
-#         ev.confusion_mat(pred,methode.name())
-#         delta = int(time.time() - debut)
-#         print(f"Temps écoulé : {delta // 60} min {delta % 60} sec\n")
-
 def do_n_simulations(N, model_type, verbose):
     
+    print()
     precision = []
     recall = []
     f1_score = []
@@ -63,37 +27,37 @@ def do_n_simulations(N, model_type, verbose):
     for i in range(N):
         
         if verbose >= 1:
-            print(f"Iteration {i + 1} / {N}")
+            print(f"----- ITERATION {i + 1} / {N} -----\n")
 
-        data_gestion = gd.GestionDonnees("./data/train.csv")
+        data_gestion = dg.DataGestion("./data/train.csv")
         data = data_gestion.transformation("species")
-        X_train, X_test, t_train, t_test = data_gestion.separation(data)
+        X_train, X_test, t_train, t_test = data_gestion.balanced_train_test_split(data, test_size=0.2)
         model = None
 
         if model_type == "generative":
-            model = modele_generatif.ModeleGeneratif()
+            model = generative_model.GenerativeModel()
         elif model_type == "knn":
             model = KNN.KNN()
-        elif model_type == "gbtree":
+        elif model_type == "gbt":
             model = GBT.GBT()
         elif model_type == "perceptron":
             model = perceptron.PerceptronModel()
         elif model_type == "logistic":
-            model= logistic.Logistic()
+            model= logistic_regression.Logistic()
         elif model_type == "svc":
             model = SVC.SVC()
         else:
-            model = reseau_de_neurones.ReseauDeNeurones()
+            model = neural_network.NeuralNetwork()
 
         ev = evm.EvaluationMetrics(t_test)
 
         beginning = time.time()
 
-        model.recherche_parametres(X_train, t_train)
+        model.search_best_parameters(X_train, t_train)
         if verbose >= 2:
-            model.afficher_parametres()
-        model.entrainement(X_train, t_train)
-        prediction = model.prediction(X_test)
+            model.print_parameters()
+        model.train(X_train, t_train)
+        prediction = model.predict(X_test)
         prec, rec, f1 = ev.evaluate(model, prediction, verbose)
         delta = int(time.time() - beginning)
 
@@ -103,21 +67,23 @@ def do_n_simulations(N, model_type, verbose):
         duration.append(delta)
 
         if verbose >= 1:
-            print(f"Time : {delta // 60} min {delta % 60} sec\n")
+            print(f"*** TIME ***\n{delta // 60} min {delta % 60} sec\n")
 
-    print(f'''Precision : 
-Mean = {round(np.mean(precision), 3)}
-Std = {round(np.std(precision), 3)}
+    print(f'''----- FINAL REPORT -----\n
+Precision : 
+Mean : {round(np.mean(precision), 3)}
+Std : {round(np.std(precision), 3)}
 
 Recall : 
-Mean = {round(np.mean(recall), 3)}
-Std = {round(np.std(recall), 3)}
+Mean : {round(np.mean(recall), 3)}
+Std : {round(np.std(recall), 3)}
 
 F1-Score : 
-Mean = {round(np.mean(f1_score), 3)}
-Std = {round(np.std(f1_score), 3)}
+Mean : {round(np.mean(f1_score), 3)}
+Std : {round(np.std(f1_score), 3)}
 
-Mean time : {int(np.mean(duration) // 60)} min {int(np.mean(duration) % 60)} sec''')
+Mean time : {int(np.mean(duration) // 60)} min {int(np.mean(duration) % 60)} sec
+''')
 
 if __name__ == "__main__":
 

@@ -9,13 +9,13 @@ class SVC:
 
         self.model = svm.SVC(C = self.C,kernel = self.kernel,gamma = self.gamma)
 
-    def entrainement(self, X_train, y_train):
+    def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
 
-    def prediction(self, X_test):
+    def predict(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, t, cv=5):
+    def search_best_parameters(self, X, t, cv=5):
         param_grid = {'C': [0.001,0.01,0.1, 1,10], 'kernel': ['linear', 'rbf','sigmoid','poly'], 'gamma': [0.001,0.01,0.1, 1]}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, t)
@@ -24,11 +24,12 @@ class SVC:
         self.gamma = grid_search.best_params_.get("gamma")
         self.model = grid_search.best_estimator_
     
-    def afficher_parametres(self):
-        print(f'''Parameters :
+    def print_parameters(self):
+        print(f'''*** PARAMETERS ***
 C : {self.C}
 kernel : {self.kernel}
-gamma : {self.gamma}''')
+gamma : {self.gamma}
+''')
     
     def name(self):
         return "Support Vector Classification"

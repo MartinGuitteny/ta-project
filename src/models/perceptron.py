@@ -9,13 +9,13 @@ class PerceptronModel:
         self.alpha = alpha
         self.model = Perceptron(max_iter=self.max_iter, eta0=self.eta0)
 
-    def entrainement(self, X_train, y_train):
+    def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
 
-    def prediction(self, X_test):
+    def predict(self, X_test):
         return self.model.predict(X_test)
 
-    def recherche_parametres(self, X, y, cv=5):
+    def search_best_parameters(self, X, y, cv=5):
         param_grid = {"max_iter": [1000], "eta0": [1, 0.1, 0.01, 0.001], "alpha": [1, 0.1, 0.01, 0.001]}
         grid_search = GridSearchCV(self.model, param_grid, cv=cv)
         grid_search.fit(X, y)
@@ -24,13 +24,13 @@ class PerceptronModel:
         self.alpha = grid_search.best_params_.get("alpha")
         self.model = grid_search.best_estimator_
 
-    def afficher_parametres(self):
+    def print_parameters(self):
         print(
-            f"""Parameters :
+            f"""*** PARAMETERS ***
 max_iter : {self.max_iter}
 eta0 : {self.eta0}
-alpha : {self.alpha}"""
-        )
+alpha : {self.alpha}
+""")
 
     def name(self):
         return "Perceptron"
