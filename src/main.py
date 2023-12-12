@@ -34,7 +34,7 @@ def main():
         methode.entrainement(X_train, t_train)
         pred = methode.prediction(X_test)
         ev.evaluate(methode, pred)
-        ev.confusion_mat(pred)
+        ev.confusion_mat(pred,methode.name())
         delta = int(time.time() - debut)
         print(f"Temps écoulé : {delta // 60} min {delta % 60} sec\n")
 

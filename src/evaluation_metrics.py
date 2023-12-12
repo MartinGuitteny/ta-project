@@ -19,7 +19,8 @@ Rappel : {recall}
 F1-Score : {f1_score}''')
         return precision, recall, f1_score
 
-    def confusion_mat(self,t_pred):
+    def confusion_mat(self,t_pred,name):
         classes = []
         ConfusionMatrixDisplay.from_predictions(self.t_test,t_pred,include_values=False, display_labels=classes)
+        plt.title(name)
         plt.show()
