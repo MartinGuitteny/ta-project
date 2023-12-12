@@ -10,21 +10,20 @@ import perceptron
 import time
 
 
-
 def main():
     donnees = gd.GestionDonnees("./data/train.csv")
     datas = donnees.transformation("species")
     X_train, X_test, t_train, t_test = donnees.separation(datas)
 
     generatif = modele_generatif.ModeleGeneratif()
-    svc = SVC.SVC()
     knn = KNN.KNN()
-    reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
-    logistic_ = logistic.Logistic()
     tree = GBT.GBT()
     perceptron_ = perceptron.PerceptronModel()
+    logistic_ = logistic.Logistic()
+    svc = SVC.SVC()
+    reseau_neurones = reseau_de_neurones.ReseauDeNeurones()
 
-    methodes = [generatif, svc, knn, reseau_neurones, logistic_, perceptron_]
+    methodes = [generatif, knn, tree, perceptron_, logistic_, svc, reseau_neurones]
 
     ev = evaluation_metrics.evaluation_metrics(t_test)
 

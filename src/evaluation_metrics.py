@@ -9,7 +9,10 @@ class evaluation_metrics():
     def evaluate(self,methode,pred):
         precision = precision_score(self.t_test,pred,average='macro', zero_division = 0)
         recall = recall_score(self.t_test,pred,average='macro', zero_division = 0)
-        f1_score = 2 * (precision * recall) / (precision + recall)
+        if precision == 0 and recall == 0:
+            f1_score = 0
+        else:
+            f1_score = 2 * (precision * recall) / (precision + recall)
         print(f'''Modèle : {methode.name()}
 Précision : {precision}
 Rappel : {recall}
