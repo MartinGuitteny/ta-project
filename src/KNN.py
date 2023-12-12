@@ -22,7 +22,7 @@ class KNN:
         self.model = grid_search.best_estimator_
     
     def afficher_parametres(self):
-        print(f'''Paramètres:
+        print(f'''Parameters :
 n : {self.n}''')
         
     def name(self):

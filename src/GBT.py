@@ -6,7 +6,7 @@ class GBT:
         self.n_estimators=n_estimators
         self.max_depth=max_depth
         self.learning_rate=learning_rate
-        self.model = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,max_depth=1, random_state=0)
+        self.model = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,max_depth=1)
 
     def entrainement(self, X_train, y_train):
         self.model.fit(X_train, y_train)
@@ -26,7 +26,7 @@ class GBT:
         self.model = grid_search.best_estimator_
     
     def afficher_parametres(self):
-        print(f'''Paramètres:
+        print(f'''Parameters :
 max_depth : {self.max_depth}
 n_estimators : {self.n_estimators}
 learning_rate : {self.learning_rate}

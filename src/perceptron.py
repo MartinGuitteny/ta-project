@@ -26,7 +26,7 @@ class PerceptronModel:
 
     def afficher_parametres(self):
         print(
-            f"""Paramètres:
+            f"""Parameters :
 max_iter : {self.max_iter}
 eta0 : {self.eta0}
 alpha : {self.alpha}"""

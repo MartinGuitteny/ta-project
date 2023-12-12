@@ -25,7 +25,7 @@ class SVC:
         self.model = grid_search.best_estimator_
     
     def afficher_parametres(self):
-        print(f'''Parametres:
+        print(f'''Parameters :
 C : {self.C}
 kernel : {self.kernel}
 gamma : {self.gamma}''')

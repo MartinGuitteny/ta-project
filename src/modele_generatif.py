@@ -21,7 +21,7 @@ class ModeleGeneratif:
         self.model = grid_search.best_estimator_
 
     def afficher_parametres(self):
-        print(f'''Paramètres :
+        print(f'''Parameters :
 covariance_type : {self.covariance_type}''')
 
     def name(self):

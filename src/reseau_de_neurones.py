@@ -26,7 +26,7 @@ class ReseauDeNeurones:
         self.model = grid_search.best_estimator_
 
     def afficher_parametres(self):
-        print(f'''Paramètres:
+        print(f'''Parameters:
 hidden_layer_sizes : {self.hidden_layer_sizes}
 max_iter : {self.max_iter}
 learning_rate_init : {self.learning_rate_init}''')
