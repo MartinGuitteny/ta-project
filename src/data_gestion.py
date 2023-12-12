@@ -2,8 +2,8 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 import pandas as pd
 
-class DataGestion:
 
+class DataGestion:
     def __init__(self, path_csv, is_normalized):
         self.path = path_csv
         self.is_normalized = is_normalized
@@ -14,9 +14,7 @@ class DataGestion:
         columns_to_normalize.remove("species")
 
         scaler = StandardScaler()
-        ct = ColumnTransformer([
-            ("normalizer", scaler, columns_to_normalize)
-        ])
+        ct = ColumnTransformer([("normalizer", scaler, columns_to_normalize)])
         df[columns_to_normalize] = ct.fit_transform(df)
 
     def transformation(self, attribute):
@@ -36,7 +34,7 @@ class DataGestion:
         2 samples of each class X_test and t_test
         """
         df = pd.DataFrame(df.drop(columns="id").reset_index(drop=True).sample(frac=1))
-        number_tests_samples = 10 * test_size # 10 samples per class
+        number_tests_samples = 10 * test_size  # 10 samples per class
 
         selected_tests_samples_per_class = {}
         train_index = []
@@ -54,7 +52,7 @@ class DataGestion:
 
         X_train = df.loc[train_index]
         X_test = df.loc[test_index]
-        
+
         t_train = X_train["species"]
         t_test = X_test["species"]
 
@@ -62,6 +60,3 @@ class DataGestion:
         X_test = X_test.drop(columns="species")
 
         return X_train, X_test, t_train, t_test
-            
-
-
